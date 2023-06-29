@@ -1,6 +1,7 @@
 package com.numble.tossserverbatch.service;
 
 
+import com.numble.tossserverbatch.api.request.MemberSignUpRequestDto;
 import com.numble.tossserverbatch.domain.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,10 @@ public class MemberServiceTest {
 //    @Autowired MemberRepository memberRepository;
 
     @Test
-    @Rollback(false)
-    public void 회원_가입_테스트() throws  Exception {
+    //    @Rollback(false)
+    public void 회원_가입_테스트() throws Exception {
         // given
-        Long memberId = memberService.signUp("jongwan", "19951209");
-
-        System.out.println("memberId = " + memberId);
+        Long memberId = memberService.signUp("jongwanra", "19951209");
 
         // when
 

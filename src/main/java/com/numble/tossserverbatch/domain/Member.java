@@ -16,15 +16,12 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(nullable = false)
     private  String name;
 
-    @Column(length = 8)
+    @Column(length = 8, nullable = false)
     private String birthDay;
 
-
-//    private Member(){
-//        throw new AssertionError();
-//    }
 
     public static Member createMember(String name, String birthDay) {
         Member createdMember = new Member();
