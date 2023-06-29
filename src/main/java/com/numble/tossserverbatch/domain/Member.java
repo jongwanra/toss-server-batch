@@ -22,7 +22,6 @@ public class Member {
     @Column(length = 8, nullable = false)
     private String birthDay;
 
-
     public static Member createMember(String name, String birthDay) {
         Member createdMember = new Member();
         createdMember.name = name;

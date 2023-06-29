@@ -6,7 +6,10 @@ import lombok.Getter;
 @Getter
 public class MemberSignUpResponseDto {
     private Long id;
-    public MemberSignUpResponseDto(Long id) {
-        this.id = id;
+    private String name;
+    
+    public MemberSignUpResponseDto(Member member) {
+        this.id = member.getId();
+        this.name = member.getName();
     }
 }
