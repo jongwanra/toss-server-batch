@@ -9,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 public class MemberSignUpRequestDto {
-
     @NotEmpty
     private String name;
 

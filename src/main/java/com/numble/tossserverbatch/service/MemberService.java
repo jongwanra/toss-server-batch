@@ -20,12 +20,11 @@ public class MemberService {
 
 
     public Long signUp (
-        String name,
-        String birthDay
+        MemberSignUpRequestDto request
     ){
-        validateDulicatedMemberByName(name);
+        validateDulicatedMemberByName(request.getName());
 
-        Member member = createMember(name, birthDay);
+        Member member = createMember(request.getName(), request.getBirthDay());
         return memberRepository.save(member);
     }
 

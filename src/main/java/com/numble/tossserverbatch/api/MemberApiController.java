@@ -17,7 +17,7 @@ public class MemberApiController {
     private final MemberService memberService;
     @PostMapping("/api/sign-up")
     public MemberSignUpResponseDto signUp(@RequestBody @Valid MemberSignUpRequestDto request) {
-        Long memberId = memberService.signUp(request.getName(), request.getBirthDay());
+        Long memberId = memberService.signUp(request);
         return new MemberSignUpResponseDto(memberId);
     }
 }

@@ -18,10 +18,15 @@ public class MemberServiceTest {
 //    @Autowired MemberRepository memberRepository;
 
     @Test
-    //    @Rollback(false)
     public void 회원_가입_테스트() throws Exception {
         // given
-        Long memberId = memberService.signUp("jongwanra", "19951209");
+
+        MemberSignUpRequestDto memberSignUpRequestDto = new MemberSignUpRequestDto();
+        memberSignUpRequestDto.setName("jongwanra");
+        memberSignUpRequestDto.setBirthDay("19951209");
+        Long memberId = memberService.signUp(memberSignUpRequestDto);
+
+        System.out.println("memberId = " + memberId);
 
         // when
 
