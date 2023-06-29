@@ -1,5 +1,6 @@
 package com.numble.tossserverbatch.api;
 import com.numble.tossserverbatch.api.request.MemberSignUpRequestDto;
+import com.numble.tossserverbatch.api.response.MemberSignInResponseDto;
 import com.numble.tossserverbatch.api.response.MemberSignUpResponseDto;
 import com.numble.tossserverbatch.repository.MemberRepository;
 import com.numble.tossserverbatch.service.MemberService;
@@ -21,4 +22,10 @@ public class MemberApiController {
         Long memberId = memberService.signUp(request);
         return new MemberSignUpResponseDto(memberRepository.findOne(memberId));
     }
+
+    @PostMapping("/api/sign-in")
+    public void signIn(){
+
+    }
+
 }

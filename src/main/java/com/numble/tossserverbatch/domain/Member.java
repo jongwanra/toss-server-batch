@@ -22,11 +22,22 @@ public class Member {
     @Column(length = 8, nullable = false)
     private String birthDay;
 
-    public static Member createMember(String name, String birthDay) {
+    // ACTIVE, DELETED
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status;
+
+    public static Member withNameAndBirthDay(String name, String birthDay) {
         Member createdMember = new Member();
         createdMember.name = name;
         createdMember.birthDay = birthDay;
+        createdMember.status = MemberStatus.ACTIVE;
 
         return createdMember;
     }
+
+    public Member deleteMember(Member member){
+        member.status = MemberStatus.DELETED;
+        return member;
+    }
+
 }

@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.numble.tossserverbatch.domain.Member.createMember;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,8 +22,14 @@ public class MemberService {
     ){
         validateDulicatedMemberByName(request.getName());
 
-        Member member = createMember(request.getName(), request.getBirthDay());
-        return memberRepository.save(member);
+        Member createdMember = Member.withNameAndBirthDay(request.getName(), request.getBirthDay());
+        return memberRepository.save(createdMember);
+    }
+
+    public void deleteMember () {
+        // 삭제할 수 있는지 상황인지 체크
+
+        // 삭제
     }
 
     private void validateDulicatedMemberByName(String name) {
