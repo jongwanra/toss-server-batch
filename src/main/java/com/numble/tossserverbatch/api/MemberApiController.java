@@ -20,7 +20,7 @@ public class MemberApiController {
     @PostMapping("/api/sign-up")
     public MemberSignUpResponseDto signUp(@RequestBody @Valid MemberSignUpRequestDto request) {
         Long memberId = memberService.signUp(request);
-        return new MemberSignUpResponseDto(memberRepository.findOne(memberId));
+        return new MemberSignUpResponseDto(memberRepository.findById(memberId).get());
     }
 
     @PostMapping("/api/sign-in")

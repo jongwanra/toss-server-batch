@@ -36,7 +36,7 @@ public class MemberServiceTest {
 
         // when
         Long memberId = memberService.signUp(memberSignUpRequestDto);
-        Member createdMember = memberRepository.findOne(memberId);
+        Member createdMember = memberRepository.findById(memberId).orElseThrow();
 
 
         // then

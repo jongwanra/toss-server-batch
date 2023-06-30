@@ -21,9 +21,8 @@ public class MemberService {
         MemberSignUpRequestDto request
     ){
         validateDulicatedMemberByName(request.getName());
-
         Member createdMember = Member.withNameAndBirthDay(request.getName(), request.getBirthDay());
-        return memberRepository.save(createdMember);
+        return memberRepository.save(createdMember).getId();
     }
 
     public void deleteMember () {
