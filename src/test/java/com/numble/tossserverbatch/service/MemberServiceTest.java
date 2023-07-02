@@ -1,10 +1,11 @@
 package com.numble.tossserverbatch.service;
 
 
-import com.numble.tossserverbatch.api.request.MemberSignUpRequestDto;
-import com.numble.tossserverbatch.domain.Member;
-import com.numble.tossserverbatch.domain.MemberStatus;
-import com.numble.tossserverbatch.repository.MemberRepository;
+import com.numble.tossserverbatch.domain.member.controller.dto.request.MemberSignUpRequestDto;
+import com.numble.tossserverbatch.domain.member.entity.Member;
+import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
+import com.numble.tossserverbatch.domain.member.service.MemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 public class MemberServiceTest {
 
     @Autowired
-    MemberService memberService;
+    MemberService userService;
     @Autowired
     MemberRepository memberRepository;
 
@@ -30,19 +31,24 @@ public class MemberServiceTest {
         // given
         String givenName = "jongwanra";
         String givenBirthDay = "19951209";
-        MemberSignUpRequestDto memberSignUpRequestDto = new MemberSignUpRequestDto();
-        memberSignUpRequestDto.setName(givenName);
-        memberSignUpRequestDto.setBirthDay(givenBirthDay);
+        String givenLoginId = "abctest";
+        String givenPassword = "test123!!";
+        MemberSignUpRequestDto userSignUpRequestDto = new MemberSignUpRequestDto();
+        userSignUpRequestDto.setLoginId(givenLoginId);
+        userSignUpRequestDto.setName(givenName);
+        userSignUpRequestDto.setBirthDay(givenBirthDay);
+        userSignUpRequestDto.setPassword(givenPassword);
 
         // when
-        Long memberId = memberService.signUp(memberSignUpRequestDto);
-        Member createdMember = memberRepository.findById(memberId).orElseThrow();
+        Long userId = userService.signUp(userSignUpRequestDto);
+        Member createdUser = memberRepository.findById(userId).orElseThrow();
 
 
         // then
-        assertEquals("회원 가입 된 멤버 이름 확인", givenName, createdMember.getName());
-        assertEquals("회원 가입 된 멤버 BirthDay 확인", givenBirthDay, createdMember.getBirthDay());
-        assertEquals("회원 가입 된 멤버 상태 확인", MemberStatus.ACTIVE, createdMember.getStatus());
+        assertEquals("회원 가입 된 멤버 로그인 ID 확인", givenLoginId, createdUser.getLoginId());
+        assertEquals("회원 가입 된 멤버 이름 확인", givenName, createdUser.getName());
+        assertEquals("회원 가입 된 멤버 BirthDay 확인", givenBirthDay, createdUser.getBirthDay());
+        assertEquals("회원 가입 된 멤버 상태 확인", MemberStatus.ACTIVE, createdUser.getStatus());
     }
 
 
@@ -52,22 +58,28 @@ public class MemberServiceTest {
         // given
         String givenName = "jongwanra";
         String givenBirthDay = "19951209";
+        String givenLoginId = "abctest";
+        String givenPassword = "12341234";
 
-        MemberSignUpRequestDto memberSignUpRequestDto = new MemberSignUpRequestDto();
-        memberSignUpRequestDto.setName(givenName);
-        memberSignUpRequestDto.setBirthDay(givenBirthDay);
+        MemberSignUpRequestDto userSignUpRequestDto = new MemberSignUpRequestDto();
+        userSignUpRequestDto.setLoginId(givenLoginId);
+        userSignUpRequestDto.setName(givenName);
+        userSignUpRequestDto.setBirthDay(givenBirthDay);
+        userSignUpRequestDto.setPassword(givenPassword);
 
 
-        MemberSignUpRequestDto duplicatedMemberSignUpRequestDto = new MemberSignUpRequestDto();
-        duplicatedMemberSignUpRequestDto.setName(givenName);
-        memberSignUpRequestDto.setBirthDay("19940217");
+        MemberSignUpRequestDto duplicatedUserSignUpRequestDto = new MemberSignUpRequestDto();
+        duplicatedUserSignUpRequestDto.setLoginId(givenLoginId);
+        duplicatedUserSignUpRequestDto.setName(givenName);
+        duplicatedUserSignUpRequestDto.setBirthDay("19940217");
+        duplicatedUserSignUpRequestDto.setPassword(givenPassword);
 
 
         // when
-        Long memberId = memberService.signUp(memberSignUpRequestDto);
+        Long userId = userService.signUp(duplicatedUserSignUpRequestDto);
 
         IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            memberService.signUp(duplicatedMemberSignUpRequestDto);
+            userService.signUp(duplicatedUserSignUpRequestDto);
         });
 
         // then
