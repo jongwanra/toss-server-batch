@@ -1,25 +1,3 @@
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/toss-server-batch;
-    username: jw
-    password:
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        default_batch_fetch_size: 100
-
-  logging:
-    level:
-      org.hibernate.SQL: debugs
-      org.hibernate.type: trace
-
-jwt:
-  header: Authorization
-  secret: c2ldqoiwndoiqndionasocniqwhe8wdqonwioenqoiwneinsdkndiwqndowqnieniwheq
-  token-validity-in-seconds: 86400
+  profiles:
+    active: dev

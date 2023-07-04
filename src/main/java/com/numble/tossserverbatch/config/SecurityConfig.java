@@ -1,6 +1,8 @@
-package com.numble.tossserverbatch.domain.auth.jwt;
+package com.numble.tossserverbatch.config;
 
 
+import com.numble.tossserverbatch.domain.auth.jwt.JwtFilter;
+import com.numble.tossserverbatch.domain.auth.jwt.JwtTokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @AllArgsConstructor
 @Configuration
-public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
 
