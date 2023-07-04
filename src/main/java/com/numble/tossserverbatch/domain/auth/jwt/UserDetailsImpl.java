@@ -4,6 +4,7 @@ import com.numble.tossserverbatch.domain.member.entity.Member;
 import com.numble.tossserverbatch.domain.member.entity.type.MemberRole;
 import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import java.util.Collection;
 
 
 @AllArgsConstructor
+@ToString
 public class UserDetailsImpl implements UserDetails {
 
     private static String ROLE_PREFIX = "ROLE_";
@@ -33,7 +35,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getLoginId();
+        return member.getId().toString();
     }
 
     @Override

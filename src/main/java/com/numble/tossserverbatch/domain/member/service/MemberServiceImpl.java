@@ -4,6 +4,7 @@ package com.numble.tossserverbatch.domain.member.service;
 import com.numble.tossserverbatch.domain.member.controller.dto.request.MemberSignUpRequestDto;
 import com.numble.tossserverbatch.domain.member.entity.Member;
 import com.numble.tossserverbatch.domain.member.entity.type.MemberRole;
+import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     public Long signUp (
         MemberSignUpRequestDto request
     ){
-        validateDulicatedMemberByName(request.getName());
+        validateDulicatedMember(request);
 
         String hashedPassword = passwordEncoder.encode(request.getPassword());
         Member createdUser = Member.createMember(
@@ -51,10 +53,10 @@ public class MemberServiceImpl implements MemberService {
 //        return new MemberSignInResponseDto(tokenProvider.createToken(member.getAuthorities()))
 //    }
 
-    private void validateDulicatedMemberByName(String name) {
-        List<Member> findMembers = userRepository.findByName(name);
+    private void validateDulicatedMember(MemberSignUpRequestDto request) {
+        boolean isExistMember = userRepository.findByLoginIdAndStatus(request.getLoginId(), MemberStatus.ACTIVE).isPresent();
 
-        if(!findMembers.isEmpty()){
+        if(isExistMember){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }

@@ -6,6 +6,8 @@ import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import com.numble.tossserverbatch.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +28,14 @@ public class MemberApiController {
         Long memberId = memberService.signUp(request);
         return ResponseEntity.ok(new MemberSignUpResponseDto(memberRepository.findById(memberId).orElseThrow()));
     }
+
+    @DeleteMapping()
+    public ResponseEntity<?> deleteMember(
+            @AuthenticationPrincipal Authentication userId
+    ){
+        System.out.println("check Delete Method" + userId);
+        return ResponseEntity.ok(200);
+    }
+
 }
 

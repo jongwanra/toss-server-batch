@@ -1,19 +1,27 @@
 package com.numble.tossserverbatch.domain.auth.jwt;
 
 
+import com.numble.tossserverbatch.domain.auth.jwt.type.JwtTokenType;
+import com.numble.tossserverbatch.domain.member.entity.Member;
+import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
+import com.numble.tossserverbatch.domain.member.service.MemberService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -26,18 +34,21 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtTokenProvider implements InitializingBean {
 
+    @Autowired
+    MemberRepository memberRepository;
     private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private static final String TOKEN_PREFIX = "Bearer ";
+    private static final Long refreshTokenValidityInMilliseconds = 604800 * 1000L;
+    private static final Long accessTokenValidityInMilliseconds = 7200 * 1000L;
     private final String secret;
-    private final long tokenValidityInMilliseconds;
+
     private Key key;
 
     public JwtTokenProvider(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            @Value("${jwt.secret}") String secret
+    ) {
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
 
     @Override
@@ -46,15 +57,19 @@ public class JwtTokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication) {
+    public String createTokenByType(Authentication authentication, JwtTokenType tokenType) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
-        log.info("authentication:" + authentication);
+        Date validity = new Date(now +
+                (tokenType == JwtTokenType.ACCESS
+                        ? accessTokenValidityInMilliseconds
+                        : refreshTokenValidityInMilliseconds
+                ));
+
         return TOKEN_PREFIX + Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -83,7 +98,14 @@ public class JwtTokenProvider implements InitializingBean {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jws<Claims> parsedClaimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            System.out.println("parsedClaimsJws = " + parsedClaimsJws);
+            Member member = memberRepository.findByIdAndStatus(Long.parseLong(parsedClaimsJws.getBody().getSubject()), MemberStatus.ACTIVE)
+                    .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
+
+
+            System.out.println(":: member::" + member);
+
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             logger.info("잘못된 JWT 서명입니다.");
