@@ -97,12 +97,8 @@ public class JwtTokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> parsedClaimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            System.out.println("parsedClaimsJws = " + parsedClaimsJws);
-            Member member = memberRepository.findByIdAndStatus(Long.parseLong(parsedClaimsJws.getBody().getSubject()), MemberStatus.ACTIVE)
-                    .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
-
-
-            System.out.println(":: member::" + member);
+//            Member member = memberRepository.findByIdAndStatus(Long.parseLong(parsedClaimsJws.getBody().getSubject()), MemberStatus.ACTIVE)
+//                    .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
 
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {

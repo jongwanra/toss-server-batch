@@ -56,5 +56,6 @@ public class Member extends BaseTimeEntity {
 
     public void deleteMember() {
         this.status = MemberStatus.DELETED;
+        accounts.forEach(Account::deleteAccount);
     }
 }

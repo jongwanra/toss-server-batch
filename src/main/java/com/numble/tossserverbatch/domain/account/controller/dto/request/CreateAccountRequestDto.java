@@ -10,13 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateAccountRequestDto {
     private String bank;
-    private String bankNumber;
+    private String accountNumber;
     private Long balance;
 
     @Builder
-    public CreateAccountRequestDto(String bank, String bankNumber, Long balance){
+    public CreateAccountRequestDto(String bank, String accountNumber, Long balance){
         this.bank = bank;
-        this.bankNumber = bankNumber;
+        this.accountNumber = accountNumber;
         this.balance = balance;
 
     }

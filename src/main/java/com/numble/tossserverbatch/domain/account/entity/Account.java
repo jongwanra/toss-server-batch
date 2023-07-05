@@ -27,12 +27,11 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = false)
     private Long balance;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id", nullable = false)
+    @JoinColumn(name="member_id")
     private Member member;
 
     public static Account createAccount(String bank, String accountNumber, Long balance, Member member){

@@ -7,12 +7,14 @@ import com.numble.tossserverbatch.domain.member.entity.MemberRole;
 import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -39,9 +41,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMember(Long memberId) {
+        log.info("what!!!!?:;" + memberId);
         Member memberToDelete = memberRepository.findByIdAndStatus(memberId, MemberStatus.ACTIVE)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않은 회원입니다."));
-
+        log.info("memberToDelete:" + memberToDelete);
         memberToDelete.deleteMember();
     }
 
