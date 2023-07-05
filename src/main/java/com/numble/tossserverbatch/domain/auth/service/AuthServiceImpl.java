@@ -6,6 +6,7 @@ import com.numble.tossserverbatch.domain.auth.jwt.JwtTokenProvider;
 import com.numble.tossserverbatch.domain.auth.jwt.type.JwtTokenType;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
+    private final RedisTemplate<Long, String> redisTemplate;
 
 
     public SignInResponseDto signIn(SignInRequestDto request ){
