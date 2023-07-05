@@ -3,13 +3,11 @@ package com.numble.tossserverbatch.domain.auth.jwt;
 
 import com.numble.tossserverbatch.domain.auth.jwt.type.JwtTokenType;
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
-import com.numble.tossserverbatch.domain.member.service.MemberService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

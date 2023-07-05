@@ -3,7 +3,7 @@ package com.numble.tossserverbatch.service;
 
 import com.numble.tossserverbatch.domain.member.controller.dto.request.MemberSignUpRequestDto;
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import com.numble.tossserverbatch.domain.member.service.MemberService;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.util.AssertionErrors.assertEquals;

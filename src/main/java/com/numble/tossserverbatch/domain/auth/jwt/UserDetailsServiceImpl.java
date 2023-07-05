@@ -1,7 +1,7 @@
 package com.numble.tossserverbatch.domain.auth.jwt;
 
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

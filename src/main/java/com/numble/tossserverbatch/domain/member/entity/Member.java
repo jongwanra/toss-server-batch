@@ -1,6 +1,5 @@
 package com.numble.tossserverbatch.domain.member.entity;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberRole;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +11,11 @@ import javax.persistence.*;
 @Getter
 @ToString
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue
-    @Column(name = "member_id")
-    private Long id;
+    @Column
+    private Long memberId;
 
     @Column(nullable = false)
     private String loginId;

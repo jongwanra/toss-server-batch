@@ -1,8 +1,8 @@
 package com.numble.tossserverbatch.domain.auth.jwt;
 
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberRole;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.entity.MemberRole;
+import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;

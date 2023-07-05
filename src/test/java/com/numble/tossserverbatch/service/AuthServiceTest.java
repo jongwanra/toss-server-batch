@@ -6,7 +6,6 @@ import com.numble.tossserverbatch.domain.auth.controller.dto.response.SignInResp
 import com.numble.tossserverbatch.domain.auth.service.AuthService;
 import com.numble.tossserverbatch.domain.member.controller.dto.request.MemberSignUpRequestDto;
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import com.numble.tossserverbatch.domain.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 
 @SpringBootTest

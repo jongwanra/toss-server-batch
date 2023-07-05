@@ -1,6 +1,6 @@
 package com.numble.tossserverbatch.domain.member.repository;
 import com.numble.tossserverbatch.domain.member.entity.Member;
-import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
+import com.numble.tossserverbatch.domain.member.entity.MemberStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
