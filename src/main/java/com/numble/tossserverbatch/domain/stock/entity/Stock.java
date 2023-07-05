@@ -1,7 +1,6 @@
 package com.numble.tossserverbatch.domain.stock.entity;
 
 import com.numble.tossserverbatch.domain.BaseTimeEntity;
-import com.numble.tossserverbatch.domain.account.entity.Account;
 import com.numble.tossserverbatch.domain.quote.entity.Quote;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -25,9 +25,10 @@ erDiagram
     ACCOUNT {
         Long accountId PK
         Long balance
-        BankType bankType
+        String bank
         String accountNumber
         Long memberId FK
+        AccountStatus status
         LocalDateTime createdAt
         LocalDateTime modifiedAt
     }
