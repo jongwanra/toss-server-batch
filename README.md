@@ -9,9 +9,9 @@ Numble Toss Server Batch
 * QUOTE: 주식 시세
 ```mermaid
 erDiagram
-    
+    MEMBER ||--o{ ACCOUNT : "1:N"
     MEMBER {
-        Long memberId
+        Long memberId PK
         String loginId
         String memberName
         String birthDay
@@ -22,25 +22,34 @@ erDiagram
         LocalDateTime lastModifiedAt
     }
     
+%%    ACCOUNT ||--o{ TRANSACTION : "1:N"
     ACCOUNT {
-        Long accountId
+        Long accountId PK
         Long balance
         BankType bankType
         String accountNumber
+        Long memberId FK
         LocalDateTime createdAt
         LocalDateTime lastModifiedAt
     }
-        
+    
+    TRANSACTION ||--o{ STOCK : "1:N"
+    TRANSACTION }o--|{ ACCOUNT: "N:1"
     TRANSACTION {
-        Long transactionId
+        Long transactionId PK
         TransactionType transactionType
+        Long transactionPrice
+        Long accountId FK
+        Long stockId FK
+        String receiverAccountNumber
         LocalDateTime sendAt
         LocalDateTime createdAt
         LocalDateTime lastModifiedAt
         
     }
+    STOCK ||--|{ QUOTE : "1:N"
     STOCK {
-        Long stockId
+        Long stockId PK
         String stockName
         int amount
         Long stockPrice
@@ -48,8 +57,9 @@ erDiagram
         LocalDateTime lastModifiedAt
     }
     QUOTE {
-        Long quoteId
+        Long quoteId PK
         Long quotePrice
+        Long stockId FK
         LocalDateTime createdAt
         LocalDateTime lastModifiedAt
     }
