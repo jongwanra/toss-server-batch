@@ -1,16 +1,17 @@
 package com.numble.tossserverbatch.domain.stock.entity;
 
 import com.numble.tossserverbatch.domain.BaseTimeEntity;
+import com.numble.tossserverbatch.domain.account.entity.Account;
+import com.numble.tossserverbatch.domain.quote.entity.Quote;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,5 +33,6 @@ public class Stock extends BaseTimeEntity {
     @Column(nullable = false)
     private Long stockPrice;
 
-
+    @OneToMany(mappedBy = "stock")
+    private List<Quote> quotes = new ArrayList<>();
 }
