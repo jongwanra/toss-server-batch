@@ -6,6 +6,7 @@ Numble Toss Server Batch
 * MEMBER: 회원
 * ACCOUNT: 계좌
 * TRANSACTION: 거래 내용, 거래 방식 (송금, 결제, 입금, 예약 결제 등)
+* STOCK: 주식
 * QUOTE: 주식 시세
 ```mermaid
 erDiagram
@@ -21,8 +22,6 @@ erDiagram
         LocalDateTime createdAt
         LocalDateTime lastModifiedAt
     }
-    
-%%    ACCOUNT ||--o{ TRANSACTION : "1:N"
     ACCOUNT {
         Long accountId PK
         Long balance
