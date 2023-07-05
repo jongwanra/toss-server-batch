@@ -22,4 +22,15 @@ public class Stock extends BaseTimeEntity {
     @GeneratedValue
     @Column(name = "stock_id")
     private Long id;
+
+    @Column(nullable = false)
+    private String stockName;
+
+    @Column(nullable = false)
+    private int amount;
+
+    @Column(nullable = false)
+    private Long stockPrice;
+
+
 }

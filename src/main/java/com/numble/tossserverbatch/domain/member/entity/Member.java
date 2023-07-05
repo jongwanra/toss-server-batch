@@ -1,11 +1,14 @@
 package com.numble.tossserverbatch.domain.member.entity;
 import com.numble.tossserverbatch.domain.BaseTimeEntity;
+import com.numble.tossserverbatch.domain.account.entity.Account;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +38,9 @@ public class Member extends BaseTimeEntity {
     // ACTIVE, DELETED
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
+
+    @OneToMany(mappedBy = "member")
+    private List<Account> accounts = new ArrayList<>();
 
     public static Member createMember(String loginId, String name, String birthDay, String hashedPassword, MemberRole role) {
         Member createdMember = new Member();

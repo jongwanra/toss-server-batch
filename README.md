@@ -20,7 +20,7 @@ erDiagram
         MemberRole role
         MemberStatus status
         LocalDateTime createdAt
-        LocalDateTime lastModifiedAt
+        LocalDateTime modifiedAt
     }
     ACCOUNT {
         Long accountId PK
@@ -29,7 +29,7 @@ erDiagram
         String accountNumber
         Long memberId FK
         LocalDateTime createdAt
-        LocalDateTime lastModifiedAt
+        LocalDateTime modifiedAt
     }
     
     TRANSACTION ||--o{ STOCK : "1:N"
@@ -43,7 +43,7 @@ erDiagram
         String receiverAccountNumber
         LocalDateTime sendAt
         LocalDateTime createdAt
-        LocalDateTime lastModifiedAt
+        LocalDateTime modifiedAt
         
     }
     STOCK ||--|{ QUOTE : "1:N"
@@ -53,14 +53,14 @@ erDiagram
         int amount
         Long stockPrice
         LocalDateTime createdAt
-        LocalDateTime lastModifiedAt
+        LocalDateTime modifiedAt
     }
     QUOTE {
         Long quoteId PK
         Long quotePrice
         Long stockId FK
         LocalDateTime createdAt
-        LocalDateTime lastModifiedAt
+        LocalDateTime modifiedAt
     }
 
 ```
