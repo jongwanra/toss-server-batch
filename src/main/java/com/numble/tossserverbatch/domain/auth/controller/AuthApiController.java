@@ -25,4 +25,10 @@ public class AuthApiController {
     public ResponseEntity<SignInResponseDto> signIn(@Valid @RequestBody SignInRequestDto request) throws Exception {
         return ResponseEntity.ok(authService.signIn(request));
     }
+
+//    @PostMapping("/reissue-refresh-token")
+//    public ResponseEntity<?> reissueRefreshToken() throws Exception {
+//
+//        return ResponseEntity.ok(200);
+//    }
 }

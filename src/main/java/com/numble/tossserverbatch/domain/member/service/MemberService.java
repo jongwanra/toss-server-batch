@@ -4,4 +4,6 @@ import com.numble.tossserverbatch.domain.member.controller.dto.request.MemberSig
 
 public interface MemberService {
     Long signUp(MemberSignUpRequestDto request);
+
+    void deleteMember(Long memberId);
 }

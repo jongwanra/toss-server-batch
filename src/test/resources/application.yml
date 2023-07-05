@@ -5,6 +5,11 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+  redis:
+    host: localhost
+    password: "abc123"
+    port: 6379
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -19,7 +24,7 @@ spring:
       org.hibernate.SQL: debugs
       org.hibernate.type: trace
 
+
 jwt:
   header: Authorization
   secret: c2ldqoiwndoiqndionasocniqwhe8wdqonwioenqoiwneinsdkndiwqndowqnieniwheq
-  token-validity-in-seconds: 86400

@@ -49,8 +49,7 @@ public class Member {
         return createdMember;
     }
 
-    public Member deleteMember(Member member) {
-        member.status = MemberStatus.DELETED;
-        return member;
+    public void deleteMember() {
+        this.status = MemberStatus.DELETED;
     }
 }

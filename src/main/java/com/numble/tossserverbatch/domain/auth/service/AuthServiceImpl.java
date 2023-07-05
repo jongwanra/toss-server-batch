@@ -38,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
         return createJwtToken(authentication);
     }
 
+
     private SignInResponseDto createJwtToken(Authentication authentication) {
         String accessToken = tokenProvider.createTokenByType(authentication, JwtTokenType.ACCESS);
         String refreshToken = tokenProvider.createTokenByType(authentication, JwtTokenType.REFRESH);

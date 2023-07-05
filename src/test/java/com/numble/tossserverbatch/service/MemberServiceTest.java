@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
@@ -21,9 +24,11 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 public class MemberServiceTest {
 
     @Autowired
-    MemberService userService;
+    MemberService memberService;
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    EntityManager em;
 
     @Test
     @DisplayName("정상적인 회원 가입인 경우")
@@ -40,7 +45,7 @@ public class MemberServiceTest {
         userSignUpRequestDto.setPassword(givenPassword);
 
         // when
-        Long userId = userService.signUp(userSignUpRequestDto);
+        Long userId = memberService.signUp(userSignUpRequestDto);
         Member createdUser = memberRepository.findById(userId).orElseThrow();
 
 
@@ -76,14 +81,42 @@ public class MemberServiceTest {
 
 
         // when
-        Long userId = userService.signUp(duplicatedUserSignUpRequestDto);
+        Long memberId = memberService.signUp(duplicatedUserSignUpRequestDto);
 
         IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            userService.signUp(duplicatedUserSignUpRequestDto);
+            memberService.signUp(duplicatedUserSignUpRequestDto);
         });
 
         // then
         Assertions.assertEquals("이미 존재하는 회원입니다.", thrown.getMessage());
+    }
+
+
+    @Test
+    @DisplayName("회원 삭제 정상")
+    public void deleteMemberTest1() throws Exception {
+        // given
+        String givenName = "jongwanra";
+        String givenBirthDay = "19951209";
+        String givenLoginId = "abctest";
+        String givenPassword = "12341234";
+
+        MemberSignUpRequestDto userSignUpRequestDto = new MemberSignUpRequestDto();
+        userSignUpRequestDto.setLoginId(givenLoginId);
+        userSignUpRequestDto.setName(givenName);
+        userSignUpRequestDto.setBirthDay(givenBirthDay);
+        userSignUpRequestDto.setPassword(givenPassword);
+
+        Long memberId = memberService.signUp(userSignUpRequestDto);
+
+        // when
+        memberService.deleteMember(memberId);
+
+        em.flush();
+        Member deletedMember = memberRepository.findById(memberId).orElseThrow(() -> new IllegalStateException("???!!"));
+
+        // then
+        Assertions.assertEquals(MemberStatus.DELETED, deletedMember.getStatus());
     }
 
 }

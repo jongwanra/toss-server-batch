@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +32,10 @@ public class MemberApiController {
 
     @DeleteMapping()
     public ResponseEntity<?> deleteMember(
-            @AuthenticationPrincipal Authentication userId
+            @AuthenticationPrincipal UserDetails userDetails
     ){
-        System.out.println("check Delete Method" + userId);
+        Long memberId = Long.parseLong(userDetails.getUsername());
+        memberService.deleteMember(memberId);
         return ResponseEntity.ok(200);
     }
 

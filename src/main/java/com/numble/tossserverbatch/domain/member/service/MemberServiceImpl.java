@@ -7,6 +7,7 @@ import com.numble.tossserverbatch.domain.member.entity.type.MemberRole;
 import com.numble.tossserverbatch.domain.member.entity.type.MemberStatus;
 import com.numble.tossserverbatch.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    private final MemberRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -36,7 +37,15 @@ public class MemberServiceImpl implements MemberService {
                 hashedPassword,
                 MemberRole.USER
         );
-        return userRepository.save(createdUser).getId();
+        return memberRepository.save(createdUser).getId();
+    }
+
+    @Override
+    public void deleteMember(Long memberId) {
+        Member memberToDelete = memberRepository.findByIdAndStatus(memberId, MemberStatus.ACTIVE)
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않은 회원입니다."));
+
+        memberToDelete.deleteMember();
     }
 
 //    @Override
@@ -54,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 //    }
 
     private void validateDulicatedMember(MemberSignUpRequestDto request) {
-        boolean isExistMember = userRepository.findByLoginIdAndStatus(request.getLoginId(), MemberStatus.ACTIVE).isPresent();
+        boolean isExistMember = memberRepository.findByLoginIdAndStatus(request.getLoginId(), MemberStatus.ACTIVE).isPresent();
 
         if(isExistMember){
             throw new IllegalStateException("이미 존재하는 회원입니다.");
